@@ -3,18 +3,18 @@
 # perform the operation on the two numbers
 # output the result
 
-# answer = Kernel.gets()
-# Kernel.puts(answer)
+# answer = gets()
+# puts(answer)
 
-def prompt(message)
-  Kernel.puts("=> #{message}")
+def prompt message
+  puts "=> #{message}"
 end
 
-def valid_number?(num)
-  num.to_i() != 0
+def valid_number? num
+  num.to_i != 0
 end
 
-def operation_to_message(op)
+def operation_to_message op
   case op
   when '1'
     'Adding'
@@ -27,41 +27,41 @@ def operation_to_message(op)
   end
 end
 
-prompt("Welcome to Calculator! Enter your name:")
+prompt "Welcome to Calculator! Enter your name:"
 name = nil
 loop do
-  name = Kernel.gets().chomp()
-  if name.empty?()
-    prompt("Make sure to use a valid name.")
+  name = gets.chomp
+  if name.empty?
+    prompt "Make sure to use a valid name."
   else
     break
   end
 end
 
-prompt("Hi #{name}!")
+prompt "Hi #{name}!"
 
 loop do  # main loop
   number1 = nil
   loop do
-    prompt("What's the first number?")
-    number1 = Kernel.gets().chomp()
+    prompt "What's the first number?"
+    number1 = gets.chomp
 
-    if valid_number?(number1)
+    if valid_number? number1
       break
     else
-      prompt("Hmm... that doesn't look like a valid number")
+      prompt"Hmm... that doesn't look like a valid number"
     end
   end
 
   number2 = nil
   loop do
-    prompt("What's the second number?")
-    number2 = Kernel.gets().chomp()
+    prompt "What's the second number?"
+    number2 = gets.chomp
 
-    if valid_number?(number2)
+    if valid_number? number2
       break
     else
-      prompt("Hmm... that doesn't look like a valid number")
+      prompt "Hmm... that doesn't look like a valid number"
     end
   end
 
@@ -72,36 +72,36 @@ loop do  # main loop
     3) multiply
     4) divide
   MSG
-  prompt(operator_prompt)
+  prompt operator_prompt
   operator = nil
   loop do
-    operator = Kernel.gets().chomp()
-    if %w(1 2 3 4).include?(operator)
+    operator = gets.chomp
+    if %w(1 2 3 4).include? operator
       break
     else
-      prompt("Must choose 1, 2, 3, or 4")
+      prompt "Must choose 1, 2, 3, or 4"
     end
   end
 
-  prompt("#{operation_to_message(operator)} the two numbers...")
-  Kernel.sleep(2)
+  prompt "#{operation_to_message operator} the two numbers..."
+  sleep 2
 
   result = case operator
           when '1'
-            (number1.to_i() + number2.to_i())
+            number1.to_i + number2.to_i
           when '2'
-            (number1.to_i() - number2.to_i())
+            number1.to_i - number2.to_i
           when '3'
-            (number1.to_i() * number2.to_i())
+            number1.to_i * number2.to_i
           when '4'
-            (number1.to_f() / number2.to_f())
+            number1.to_f / number2.to_f
   end
 
-  prompt("The result is #{result}")
+  prompt "The result is #{result}"
 
-  prompt("Do you want to perform another calculation? (Y for Yes)")
-  answer = Kernel.gets().chomp()
-  break unless answer.downcase().start_with?('y')
+  prompt "Do you want to perform another calculation? (Y for Yes)"
+  answer = gets.chomp
+  break unless answer.downcase.start_with? 'y'
 end
 
-prompt("Thank you for using the calculator. Goodbye!")
+prompt "Thank you for using the calculator. Goodbye!"
