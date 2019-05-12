@@ -20,7 +20,7 @@ def number?(obj) # Better number input validation
 end
 
 def operation_to_message(op)
-  case op
+  message = case op
   when '1'
     'Adding'
   when '2'
@@ -30,6 +30,8 @@ def operation_to_message(op)
   when '4'
     'Dividing'
   end
+
+  return message
 end
 
 prompt("Welcome to Calculator! Enter your name:")
