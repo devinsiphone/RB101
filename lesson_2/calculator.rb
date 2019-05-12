@@ -6,13 +6,12 @@
 # answer = gets()
 # puts(answer)
 
+require 'yaml'
+MESSAGES = YAML.load_file('calculator_messages.yml')
+
 def prompt(message)
   puts "=> #{message}"
 end
-
-# def valid_number?(num)
-#   Integer(num) rescue false
-# end
 
 def number?(obj) # Better number input validation
   obj = obj.to_s unless obj.is_a? String
@@ -34,63 +33,63 @@ def operation_to_message(op)
   message
 end
 
-prompt("Welcome to Calculator! Enter your name:")
+prompt(MESSAGES['welcome'])
 name = nil
 loop do
   name = gets.chomp
   if name.empty?
-    prompt("Make sure to use a valid name.")
+    prompt(MESSAGES['valid_name'])
   else
     break
   end
 end
 
-prompt("Hi #{name}!")
+prompt(MESSAGES['hi'] + " #{name}!")
 
 loop do # main loop
   number1 = nil
   loop do
-    prompt("What's the first number?")
+    prompt(MESSAGES['first_number'])
     number1 = gets.chomp
 
     if number?(number1)
       break
     else
-      prompt("Hmm... that doesn't look like a valid number")
+      prompt(MESSAGES['valid_number'])
     end
   end
 
   number2 = nil
   loop do
-    prompt("What's the second number?")
+    prompt(MESSAGES['second_number'])
     number2 = gets.chomp
 
     if number?(number2)
       break
     else
-      prompt("Hmm... that doesn't look like a valid number")
+      prompt(MESSAGES['valid_number'])
     end
   end
 
-  operator_prompt = <<-MSG
-    What operation would you like to perform?
-    1) add
-    2) subtract
-    3) multiply
-    4) divide
-  MSG
-  prompt(operator_prompt)
+  # operator_prompt = <<-MSG
+  #   What operation would you like to perform?
+  #   1) add
+  #   2) subtract
+  #   3) multiply
+  #   4) divide
+  # MSG
+  prompt(MESSAGES['what_operation'])
   operator = nil
   loop do
     operator = gets.chomp
     if %w(1 2 3 4).include? operator
       break
     else
-      prompt("Must choose 1, 2, 3, or 4")
+      prompt(MESSAGES['choose'])
     end
   end
 
-  prompt("#{operation_to_message operator} the two numbers...")
+  prompt("#{operation_to_message operator} " + MESSAGES['two_numbers'])
   sleep 2
 
   result = case operator
@@ -104,11 +103,11 @@ loop do # main loop
              number1.to_f / number2.to_f
            end
 
-  prompt("The result is #{result}")
+  prompt(MESSAGES['result_is'] + " #{result}")
 
-  prompt("Do you want to perform another calculation? (Y for Yes)")
+  prompt(MESSAGES['another_calculation'])
   answer = gets.chomp
   break unless answer.downcase.start_with? 'y'
 end
 
-prompt("Thank you for using the calculator. Goodbye!")
+prompt(MESSAGES['goodbye'])
