@@ -3,14 +3,19 @@
 # perform the operation on the two numbers
 # output the result
 
-# answer = gets()
-# puts(answer)
-
 require 'yaml'
 MESSAGES = YAML.load_file('calculator_messages.yml')
 
-def prompt(message)
-  puts "=> #{message}"
+@language = 'en'
+
+def messages(message, lang='en')
+  MESSAGES[lang][message]
+end
+
+def prompt(key)
+  # ensure the messages method is declared above this line
+  message = messages(key, @language)
+  Kernel.puts("=> #{message}")
 end
 
 def number?(obj) # Better number input validation
@@ -21,75 +26,80 @@ end
 def operation_to_message(op)
   message = case op
             when '1'
-              'Adding'
+              prompt('adding')
             when '2'
-              'Subtracting'
+              prompt('subtracting')
             when '3'
-              'Multiplying'
+              prompt('multiplying')
             when '4'
-              'Dividing'
+              prompt('dividing')
             end
-
   message
 end
 
-prompt(MESSAGES['welcome'])
+prompt('language')
+language_selection = gets.chomp
+@language = case language_selection
+            when '1'
+              'en'
+            when '2'
+              'es'
+            when '3'
+              'fr'
+            end
+
+prompt('welcome')
 name = nil
 loop do
   name = gets.chomp
   if name.empty?
-    prompt(MESSAGES['valid_name'])
+    prompt('valid_name')
   else
     break
   end
 end
 
-prompt(MESSAGES['hi'] + " #{name}!")
+prompt('hi')
+puts "=> #{name}!"
 
 loop do # main loop
   number1 = nil
   loop do
-    prompt(MESSAGES['first_number'])
+    prompt('first_number')
     number1 = gets.chomp
 
     if number?(number1)
       break
     else
-      prompt(MESSAGES['valid_number'])
+      prompt('valid_number')
     end
   end
 
   number2 = nil
   loop do
-    prompt(MESSAGES['second_number'])
+    prompt('second_number')
     number2 = gets.chomp
 
     if number?(number2)
       break
     else
-      prompt(MESSAGES['valid_number'])
+      prompt('valid_number')
     end
   end
 
-  # operator_prompt = <<-MSG
-  #   What operation would you like to perform?
-  #   1) add
-  #   2) subtract
-  #   3) multiply
-  #   4) divide
-  # MSG
-  prompt(MESSAGES['what_operation'])
+  prompt('what_operation')
   operator = nil
   loop do
     operator = gets.chomp
     if %w(1 2 3 4).include? operator
       break
     else
-      prompt(MESSAGES['choose'])
+      prompt('choose')
     end
   end
 
-  prompt("#{operation_to_message operator} " + MESSAGES['two_numbers'])
+  operation_to_message(operator)
+  prompt('two_numbers')
   sleep 2
 
   result = case operator
@@ -103,11 +113,12 @@ loop do # main loop
              number1.to_f / number2.to_f
            end
 
-  prompt(MESSAGES['result_is'] + " #{result}")
+  prompt('result_is')
+  puts result
 
-  prompt(MESSAGES['another_calculation'])
+  prompt('another_calculation')
   answer = gets.chomp
   break unless answer.downcase.start_with? 'y'
 end
 
-prompt(MESSAGES['goodbye'])
+prompt('goodbye')
