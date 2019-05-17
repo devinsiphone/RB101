@@ -33,17 +33,17 @@
 require 'yaml'
 MESSAGES = YAML.load_file('mortgage_car_loan_calculator_messages.yml')
 
-def messages(message)
+def print_messages(message)
   MESSAGES[message]
 end
 
 def prompt(key)
   # ensure the messages method is declared above this line
-  message = messages(key)
+  message = print_messages(key)
   Kernel.puts("=> #{message}")
 end
 
-def welcome
+def print_welcome
   prompt('welcome')
   prompt('underline')
   sleep 1
@@ -114,12 +114,12 @@ def another_calculation?
   gets.chomp.downcase != 'y'
 end
 
-def thank_you
+def print_thank_you
   prompt('thank_you')
 end
 
 # main
-welcome()
+print_welcome()
 loop do
   loan_amount()
   apr()
@@ -128,7 +128,7 @@ loop do
   calculate_monthly_payment()
   output_monthly_payment()
   if another_calculation?()
-    thank_you()
+    print_thank_you()
     break
   end
 end
