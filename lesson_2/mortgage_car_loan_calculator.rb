@@ -111,10 +111,26 @@ def output_monthly_payment
   puts "=> $#{@monthly_payment.round(2)}"
 end
 
+def another_calculation?
+  prompt('another_calculation')
+  gets.chomp.downcase != 'y'
+end
+
+def thank_you
+  prompt('thank_you')
+end
+
+# main
 welcome()
-loan_amount()
-apr()
-loan_duration()
-calculate_monthly_interest_rate()
-calculate_monthly_payment()
-output_monthly_payment()
+loop do
+  loan_amount()
+  apr()
+  loan_duration()
+  calculate_monthly_interest_rate()
+  calculate_monthly_payment()
+  output_monthly_payment()
+  if another_calculation?()
+    thank_you()
+    break
+  end
+end
