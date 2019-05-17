@@ -33,6 +33,13 @@
 require 'yaml'
 MESSAGES = YAML.load_file('mortgage_car_loan_calculator_messages.yml')
 
+# variable declarations
+@apr_percentage = nil
+@loan_amount = nil
+@loan_duration_months = nil
+@monthly_interest_rate = nil
+@monthly_payment = nil
+
 def print_messages(message)
   MESSAGES[message]
 end
