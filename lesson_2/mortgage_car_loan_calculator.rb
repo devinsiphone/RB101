@@ -30,8 +30,6 @@
 # * Be careful about the loan duration -- are you working with months or years?
 #   Choose variable names carefully to assist in remembering.
 
-require 'pry'
-
 require 'yaml'
 MESSAGES = YAML.load_file('mortgage_car_loan_calculator_messages.yml')
 
