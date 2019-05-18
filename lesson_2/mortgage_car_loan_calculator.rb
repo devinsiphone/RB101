@@ -99,7 +99,11 @@ def calculate_monthly_interest_rate(apr_percentage)
   apr_decimal / 12
 end
 
-def calculate_monthly_payment(loan_amount, monthly_interest_rate, loan_duration_months)
+def calculate_monthly_payment(
+  loan_amount,
+  monthly_interest_rate,
+  loan_duration_months
+)
   p = loan_amount
   j = monthly_interest_rate
   n = loan_duration_months
@@ -109,7 +113,7 @@ end
 def print_monthly_payment(monthly_payment)
   prompt('print_monthly_payment')
   sleep 1
-  puts "=> $#{'%.2f' % monthly_payment.round(2)}"
+  puts "=> $#{format('%.2f', monthly_payment.round(2))}"
 end
 
 def another_calculation?
@@ -128,7 +132,11 @@ loop do
   apr_percentage = apr()
   loan_duration_months = loan_duration()
   monthly_interest_rate = calculate_monthly_interest_rate(apr_percentage)
-  monthly_payment = calculate_monthly_payment(loan_amount, monthly_interest_rate, loan_duration_months)
+  monthly_payment = calculate_monthly_payment(
+    loan_amount,
+    monthly_interest_rate,
+    loan_duration_months
+  )
   print_monthly_payment(monthly_payment)
   if another_calculation?()
     print_thank_you()
