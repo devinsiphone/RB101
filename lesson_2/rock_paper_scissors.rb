@@ -5,12 +5,12 @@ def prompt(message)
 end
 
 def display_results(player, computer)
-  if (player == 'rock' && computer == 'scissors') ||
-      (player == 'paper' && computer == 'rock') ||
-      (player == 'scissors' && computer == 'paper')
+  if (player == 'rock'      && computer == 'scissors') ||
+     (player == 'paper'     && computer == 'rock') ||
+     (player == 'scissors'  && computer == 'paper')
     "You won!"
-  elsif (player == 'rock' && computer == 'paper') ||
-        (player == 'paper' && computer == 'scissors') ||
+  elsif (player == 'rock'     && computer == 'paper') ||
+        (player == 'paper'    && computer == 'scissors') ||
         (player == 'scissors' && computer == 'rock')
     "Computer won!"
   else
@@ -38,7 +38,7 @@ loop do
 
   puts display_results(choice, computer_choice)
 
-  prompt ("Do you want to play again?")
+  prompt('Do you want to play again?')
   answer = Kernel.gets().chomp()
   break unless answer.downcase().start_with?('y')
 end
