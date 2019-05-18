@@ -1,3 +1,5 @@
+# rock_paper_scissors.rb
+
 VALID_CHOICES = ['rock', 'paper', 'scissors']
 
 def prompt(message)
