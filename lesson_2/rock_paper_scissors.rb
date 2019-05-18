@@ -1,9 +1,5 @@
 VALID_CHOICES = ['rock', 'paper', 'scissors']
 
-def test_method()
-  prompt('test method')
-end
-
 def prompt(message)
   Kernel.puts("=> #{message}")
 end
