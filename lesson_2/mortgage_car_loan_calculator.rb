@@ -33,13 +33,6 @@
 require 'yaml'
 MESSAGES = YAML.load_file('mortgage_car_loan_calculator_messages.yml')
 
-# variable declarations
-@apr_percentage = nil
-@loan_amount = nil
-@loan_duration_months = nil
-@monthly_interest_rate = nil
-@monthly_payment = nil
-
 def print_messages(message)
   MESSAGES[message]
 end
@@ -56,64 +49,67 @@ def print_welcome
   sleep 1
 end
 
-def loan_amount
+def input_loan_amount
   prompt('loan_amount')
+  loan_amount = nil
   loop do
-    @loan_amount = gets.chomp
+    loan_amount = gets.chomp
     input_validate = /^\d+\.\d\d$/
-    if @loan_amount.match(input_validate)
-      @loan_amount = @loan_amount.to_f
+    if loan_amount.match(input_validate)
       break
     else
       puts "Incorrect format, please enter as (Dollars.Cents)"
     end
   end
+  loan_amount.to_f
 end
 
 def apr
   prompt('apr')
+  apr_percentage = nil
   loop do
-    @apr_percentage = gets.chomp
+    apr_percentage = gets.chomp
     input_validate = /^100$|^\d{0,2}(\.\d{1,2})? *%?$/
-    if @apr_percentage.match(input_validate)
-      @apr_percentage = @apr_percentage.to_f
+    if apr_percentage.match(input_validate)
       break
     else
       puts "Incorrect format, please enter as percentage"
     end
   end
+  apr_percentage.to_f
 end
 
 def loan_duration
   prompt('loan_duration_months')
+  loan_duration_months = nil
   loop do
-    @loan_duration_months = gets.chomp
+    loan_duration_months = gets.chomp
     input_validate = /^(1[0-2]|[1-9])$/
-    if @loan_duration_months.match(input_validate)
-      @loan_duration_months = @loan_duration_months.to_i
+    if loan_duration_months.match(input_validate)
       break
     else
       puts "Incorrect format, please enter a month (1-12)"
     end
   end
+  loan_duration_months.to_i
 end
 
-def calculate_monthly_interest_rate
-  apr_decimal = @apr_percentage / 100
-  @monthly_interest_rate = apr_decimal / 12
+def calculate_monthly_interest_rate(apr_percentage)
+  apr_decimal = apr_percentage / 100
+  apr_decimal / 12
 end
 
-def calculate_monthly_payment
-  p = @loan_amount
-  j = @monthly_interest_rate
-  n = @loan_duration_months
-  @monthly_payment = p * (j / (1 - (1 + j)**-n))
+def calculate_monthly_payment(loan_amount, monthly_interest_rate, loan_duration_months)
+  p = loan_amount
+  j = monthly_interest_rate
+  n = loan_duration_months
+  p * (j / (1 - (1 + j)**-n))
 end
 
-def output_monthly_payment
-  prompt('output_monthly_payment')
+def print_monthly_payment(monthly_payment)
+  prompt('print_monthly_payment')
   sleep 1
-  puts "=> $#{@monthly_payment.round(2)}"
+  puts "=> $#{monthly_payment.round(2)}"
 end
 
 def another_calculation?
@@ -128,12 +124,12 @@ end
 # main
 print_welcome()
 loop do
-  loan_amount()
-  apr()
-  loan_duration()
-  calculate_monthly_interest_rate()
-  calculate_monthly_payment()
-  output_monthly_payment()
+  loan_amount = input_loan_amount()
+  apr_percentage = apr()
+  loan_duration_months = loan_duration()
+  monthly_interest_rate = calculate_monthly_interest_rate(apr_percentage)
+  monthly_payment = calculate_monthly_payment(loan_amount, monthly_interest_rate, loan_duration_months)
+  print_monthly_payment(monthly_payment)
   if another_calculation?()
     print_thank_you()
     break
