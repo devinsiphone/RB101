@@ -109,7 +109,7 @@ end
 def print_monthly_payment(monthly_payment)
   prompt('print_monthly_payment')
   sleep 1
-  puts "=> $#{monthly_payment.round(2)}"
+  puts "=> $#{'%.2f' % monthly_payment.round(2)}"
 end
 
 def another_calculation?
