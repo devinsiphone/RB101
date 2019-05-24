@@ -16,9 +16,28 @@
 # less.
 
 VALID_CHOICES = %w[rock paper scissors lizard spock]
+VALID_CHOICES_PROMPT = %w[(r)ock (p)aper (s)cissors (l)izard spoc(k)]
+VALID_CHOICES_ABBREVIATIONS = %w[r p s l k]
 
 def prompt(message)
   Kernel.puts("=> #{message}")
+end
+
+def validate_input(input)
+  case input
+  when 'r', 'rock'
+    output = VALID_CHOICES[0]
+  when 'p', 'paper'
+    output = VALID_CHOICES[1]
+  when 's', 'scissors'
+    output = VALID_CHOICES[2]
+  when 'l', 'lizard'
+    output = VALID_CHOICES[3]
+  when 'k', 'spock'
+    output = VALID_CHOICES[4]
+  else
+    output = nil
+  end
 end
 
 def win?(first, second)
@@ -48,8 +67,10 @@ end
 loop do
   choice = ''
   loop do
-    prompt("Choose one: #{VALID_CHOICES.join(', ')}")
+    prompt("Choose one: #{VALID_CHOICES_PROMPT.join(', ')}")
     choice = Kernel.gets().chomp()
+
+    choice = validate_input(choice)
 
     if VALID_CHOICES.include?(choice)
       break
