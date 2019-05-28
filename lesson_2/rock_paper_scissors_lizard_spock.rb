@@ -15,6 +15,14 @@
 # the grand winner. Don't add your incrementing logic to display_results. Keep
 # your methods simple; they should perform one logical task - no more, no less.
 
+WIN_CONDITIONS = {
+  "rock" => %w(lizard scissors),
+  "paper" => %w(rock spock),
+  "scissors" => %w(lizard paper),
+  "lizard" => %w(paper spock),
+  "spock" => %w(scissors rock)
+}
+
 VALID_CHOICES = %w[rock paper scissors lizard spock]
 VALID_CHOICES_PROMPT = %w[(r)ock (p)aper (s)cissors (l)izard spoc(k)]
 VALID_CHOICES_ABBREVIATIONS = %w[r p s l k]
@@ -43,16 +51,7 @@ def validate_input(input)
 end
 
 def win?(first, second)
-  (first == 'scissors' && second == 'paper') ||
-    (first == 'paper' && second == 'rock') ||
-    (first == 'rock' && second == 'lizard') ||
-    (first == 'lizard' && second == 'spock') ||
-    (first == 'spock' && second == 'scissors') ||
-    (first == 'scissors' && second == 'lizard') ||
-    (first == 'lizard' && second == 'paper') ||
-    (first == 'paper' && second == 'spock') ||
-    (first == 'spock' && second == 'rock') ||
-    (first == 'rock' && second == 'scissors')
+  WIN_CONDITIONS[first].include?(second)
 end
 
 def display_results(player, computer)
