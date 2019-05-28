@@ -31,6 +31,32 @@ MAX_WINS = 5
 @player_score = 0
 @computer_score = 0
 
+def greeting()
+  msg = <<-x
+
+  ------------------------------------
+    ********************************
+               Welcome to            
+    Rock Paper Scissors Lizard Spock
+                  Game
+    ********************************
+  ------------------------------------
+      Rules of the Game:
+      ^^ Scissors cuts Paper
+      ^^ Paper covers Rock
+      ^^ Rock crushes Lizard
+      ^^ Lizard poisons Spock
+      ^^ Spock smashes Scissors
+      ^^ Scissors decapitates Lizard
+      ^^ Lizard eats Paper
+      ^^ Paper disproves Spock
+      ^^ Spock vaporizes Rock
+      ^^ Rock crushes Scissors
+      First to 5 wins the game!
+  x
+  puts msg
+end
+
 def prompt(message)
   Kernel.puts("=> #{message}")
 end
@@ -78,6 +104,9 @@ def display_score
   "\nPlayer vs. Computer\n  #{@player_score}           #{@computer_score}"
 end
 
+# game begin
+greeting()
+
 # main loop
 loop do
   choice = ''
@@ -108,7 +137,7 @@ loop do
     elsif @computer_score == 5
       puts "\nThe computer is the grand champion!\n"
     end
-    prompt("Do you want to play again?")
+    prompt("Do you want to play again? (y/n)")
     answer = Kernel.gets().chomp()
     if answer.downcase().start_with?('y')
       @player_score = 0
