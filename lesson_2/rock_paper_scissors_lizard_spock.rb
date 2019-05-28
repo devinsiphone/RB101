@@ -18,6 +18,10 @@
 VALID_CHOICES = %w[rock paper scissors lizard spock]
 VALID_CHOICES_PROMPT = %w[(r)ock (p)aper (s)cissors (l)izard spoc(k)]
 VALID_CHOICES_ABBREVIATIONS = %w[r p s l k]
+MAX_WINS = 5
+
+@player_score = 0
+@computer_score = 0
 
 def prompt(message)
   Kernel.puts("=> #{message}")
@@ -55,18 +59,35 @@ end
 
 def display_results(player, computer)
   if win?(player, computer)
+    update_score('player')
     "You won!"
   elsif win?(computer, player)
+    update_score('computer')
     "Computer won!"
   else
     "It's a tie!"
   end
 end
 
+def update_score(round_winner)
+  if round_winner == 'player'
+    @player_score += 1
+  elsif round_winner == 'computer'
+    @computer_score += 1
+  else
+    nil
+  end
+end
+
+def display_score
+  "\nPlayer vs. Computer\n  #{@player_score}           #{@computer_score}"
+end
+
 # main loop
 loop do
   choice = ''
   loop do
+    puts ''
     prompt("Choose one: #{VALID_CHOICES_PROMPT.join(', ')}")
     choice = Kernel.gets().chomp()
 
@@ -84,10 +105,23 @@ loop do
   Kernel.puts("You chose: #{choice}; Computer chose: #{computer_choice}")
 
   puts display_results(choice, computer_choice)
+  puts display_score()
 
-  prompt('Do you want to play again?')
-  answer = Kernel.gets().chomp()
-  break unless answer.downcase().start_with?('y')
+  if @player_score == 5 || @computer_score == 5
+    if @player_score == 5
+      puts "\nCongratulations!  You are the grand champion!\n"
+    elsif @computer_score == 5
+      puts "\nThe computer is the grand champion!\n"
+    end
+    prompt("Do you want to play again?")
+    answer = Kernel.gets().chomp()
+    if answer.downcase().start_with?('y')
+      @player_score = 0
+      @computer_score = 0
+    else
+      break 
+    end
+  end
 end
 
 prompt("Thank you for playing #{VALID_CHOICES.join(', ')}. Good bye!")
