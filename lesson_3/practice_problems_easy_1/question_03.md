@@ -16,3 +16,8 @@ advice.each_with_index { |value, index|
 
 puts advice = advice.join(" ")
 ```
+
+After solving this problem using iteration I found a String method that solves this in one line of code.
+```ruby
+puts advice.gsub!('important', 'urgent')
+```
