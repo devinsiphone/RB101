@@ -41,6 +41,13 @@ advice = "Few things in life are as important as house training your pet dinosau
 # slice!(match_str) → new_str or nil
 p advice.slice!('Few things in life are as important as ')
 p advice
+
+# reset variable advice 
+advice = "Few things in life are as important as house training your pet dinosaur."
+
+# slice!(length) → new_str or nil
+p advice.slice!(0, advice.index('house'))
+p advice
 ```
 If we use the `#slice` method the `advice` string is not altered.  
 If we use the `#slice!` method the `advice` string is altered.
