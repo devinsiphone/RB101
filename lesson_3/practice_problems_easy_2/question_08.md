@@ -9,5 +9,13 @@ advice = "Few things in life are as important as house training your pet dinosau
 **As a bonus, what happens if you use the String#slice method instead?**
 ***
 ```ruby
+advice = "Few things in life are as important as house training your pet dinosaur."
 
+p advice.slice('Few things in life are as important as ')
+p advice
+
+p advice.slice!('Few things in life are as important as ')
+p advice
 ```
+If we use the `#slice` method the `advice` string is not altered.  
+If we use the `#slice!` method the `advice` string is altered.
